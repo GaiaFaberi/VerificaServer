@@ -25,30 +25,33 @@ public class MioThread extends Thread{
             Random random = new Random();
             int numero = random.nextInt(100);
 
-            String confronto;
+            String stringaRicevuta;
+            boolean stato = true;
+            int cont = 0;
 
+            
             do{
-
-                confronto = in.readLine();
-
-                switch(confronto.compareTo(String.valueOf(numero))){
-                    case 1:
+                stringaRicevuta = in.readLine();
+                int sNum = Integer.parseInt(stringaRicevuta);
+                
+                if(sNum >= 100 || sNum < 0){
+                    cont++;
+                    out.writeBytes("!!" + "\n");
+                }else{
+                    if(sNum < numero){
+                        cont++;
+                        out.writeBytes("<" + "\n");
+                    }else if(sNum >numero){
+                        cont++;
                         out.writeBytes(">" + "\n");
-                        break;
+                    }else if(sNum == numero){
+                        cont++;
+                        out.writeBytes("=" + "\n");
+                        out.writeBytes(cont + "\n");
+                    }
+                }   
+            }while(stato);
 
-                    case -1:
-                    out.writeBytes("<" + "\n");
-                        break;
-                    
-                    default:
-                        out.writeBytes("!!" + '\n');
-                        break;
-
-                }
-
-                
-                
-            }while(!confronto.equals("0"));
             s.close();
             
         } catch (IOException e) {
